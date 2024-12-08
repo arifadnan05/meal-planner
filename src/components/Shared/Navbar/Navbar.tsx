@@ -21,14 +21,14 @@ import Link from 'next/link';
 export default function HeaderMegaMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     return (
-        <Box pb={30}>
-            <header className={`${classes.header} bg-gray-500 py-8`}>
+        <Box >
+            <header className={`${classes.header} bg-[#16B97A] py-8`}>
                 <Group className='container mx-auto px-4' position="apart" sx={{ height: '100%' }}>
                     <Image src={logo} alt="Logo" width={100} height={50} />
 
                     <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
                         <Group className='gap-5' sx={{ height: '100%' }} spacing={0}>
-                            <Link href="#" className={classes.link}>
+                            <Link href="#" className={`${classes.link}`}>
                                 Home
                             </Link>
                             <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
@@ -71,7 +71,7 @@ export default function HeaderMegaMenu() {
                 onClose={closeDrawer}
                 size="80%"
                 padding="xl"
-                title="Navigation"
+                title="Meal Planner"
                 zIndex={1000000}
             >
                 <ScrollArea h="calc(100vh - 80px)" mx="-md">
