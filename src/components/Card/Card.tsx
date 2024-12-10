@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Recipes } from '../models/Recipes';
 import { RecipesServices } from '../services/RecipesServices';
 import { Button } from '@mantine/core';
+import Link from 'next/link';
 
 const Card: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipes[]>([]);
@@ -13,7 +14,7 @@ const Card: React.FC = () => {
     const fetchRecipes = async () => {
       try {
         const data = await RecipesServices.getAllRecipes();
-        console.log('Fetched Data:', data.data.recipes);  // Inspect response structure
+        console.log('Fetched Data:', data.data.recipes);
         setRecipes(data.data.recipes);
       } catch (error) {
         setErrorMessage('Failed to fetch recipes.');
@@ -27,22 +28,8 @@ const Card: React.FC = () => {
   }, []);
 
   if (loading) return <p>Loading...</p>;
-  if (!Array.isArray(recipes)) {
-    return <p>Data format is incorrect.</p>;
-  }
-
-  if (loading) return <p>Loading...</p>;
   if (errorMessage) return <p>{errorMessage}</p>;
   if (!Array.isArray(recipes)) return <p>Unexpected data format</p>;
-
-  // <div key={recipe.id} className="card border p-4 rounded-lg shadow-md">
-  // //           <img src={recipe.image} alt={recipe.title} className="w-full h-40 object-cover rounded-md" />
-  // //           <h2 className="text-xl font-bold mt-2">{recipe.title}</h2>
-  // //           <p className="text-gray-600">{recipe.summary}</p>
-  // //           <p className="text-sm">Ready in {recipe.readyInMinutes} minutes</p>
-  // //           <p className="text-sm">Servings: {recipe.servings}</p>
-  // //           <Button variant="default">View Details</Button>
-  // //         </div>
 
   return (
     <div className='container mx-auto px-4'>
@@ -85,10 +72,11 @@ const Card: React.FC = () => {
               </div>
             </div>
             <div className='mt-10 mb-5 flex justify-center'>
-              <Button >View Details</Button>
+              <Link href={`recipe/${recipe.id}`}>
+                <Button>View Details</Button>
+              </Link>
             </div>
           </div>
-
         </div>
         ))}
       </div>
