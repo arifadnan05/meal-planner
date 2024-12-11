@@ -60,7 +60,7 @@ const Card: React.FC = () => {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                   </svg>
-                  <span>Preparing Time {recipe.readyInMinutes} Minutes</span>
+                  <span>Ready In: {recipe.readyInMinutes} Minutes</span>
                 </span>
 
               </div>
