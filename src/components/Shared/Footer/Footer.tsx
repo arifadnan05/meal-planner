@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from '@/components/Shared/Navbar/logo.png';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 const Footer = () => {
@@ -12,7 +13,7 @@ const Footer = () => {
                         <div className="w-full -mx-6 lg:w-2/5">
                             <div className="px-6">
                                 <a href="#">
-                                    <Image src={logo} alt="Logo" width={100} height={50} />
+                                    <Link href={'/'}><Image src={logo} alt="Logo" width={100} height={50} /></Link>
                                 </a>
 
                                 <p className="max-w-sm mt-2 text-gray-100 dark:text-gray-100">Join 31,000+ other and never miss out on new tips, tutorials, and more.</p>
@@ -82,7 +83,6 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-
                     <hr className='my-5' />
                     <div>
                         <p className="text-center text-gray-100 dark:text-gray-100">© Brand 2024 - All rights reserved</p>
