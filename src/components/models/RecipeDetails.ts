@@ -20,6 +20,7 @@ export interface RecipesDetails {
     dishTypes: string[];
     analyzedInstructions: [{
         steps: [{
+            number: number;
             step: string;
             equipment: [{
                 id: string;
@@ -27,6 +28,7 @@ export interface RecipesDetails {
                 image: string;
                 localizedName: string;
             }]
+            
         }]
     }]
 }
