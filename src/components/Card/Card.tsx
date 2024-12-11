@@ -33,7 +33,7 @@ const Card: React.FC = () => {
 
   return (
     <div className='container mx-auto px-4'>
-      <h1 className='text-4xl text-center my-16'>Featured Recipe List</h1>
+      <h1 className='text-2xl font-semibold my-16'>Featured Recipe List</h1>
       <div className="grid grid-cols-4 gap-4">
         {recipes.map((recipe) => (<div key={recipe.id}>
           {/* Recipe Card */}
