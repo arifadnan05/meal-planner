@@ -1,21 +1,23 @@
+
 "use client";
 import { Box, TextInput } from '@mantine/core';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { Search } from '@/components/models/SearchResult';
 
-// Define props type
-
-const MealPlannerSearch: React.FC = () => {
+const MealPlannerSearch: React.FC = ({ sendDataToParent }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [recipes, setRecipes] = useState<Search[]>([]);
     const [loading, setLoading] = useState(false);
+    const [selectedRecipe, setSelectedRecipe] = useState<Search | null>(null);
     const [error, setError] = useState('');
 
-    const API_KEY = '037f6d097fd14144a702121fc5d8a85b';
+    const API_KEY = 'aedde2b446084d9c912dc2e1216bf46e';
 
-    // Fetch recipes when searchQuery changes
+    useEffect(() => {
+        sendDataToParent(selectedRecipe);
+    }, [selectedRecipe]);
+
     useEffect(() => {
         if (searchQuery) {
             const fetchRecipes = async () => {
@@ -29,7 +31,7 @@ const MealPlannerSearch: React.FC = () => {
                             params: {
                                 apiKey: API_KEY,
                                 query: searchQuery,
-                                number: 10,
+                                number: 50,
                                 diet: 'vegan',
                                 addRecipeInformation: true,
                             },
@@ -38,7 +40,7 @@ const MealPlannerSearch: React.FC = () => {
                     setRecipes(response.data.results);
                 } catch (err) {
                     setError('Error fetching recipes!');
-                    console.log(err)
+                    console.error(err);
                 } finally {
                     setLoading(false);
                 }
@@ -49,10 +51,14 @@ const MealPlannerSearch: React.FC = () => {
         }
     }, [searchQuery]);
 
+    const handleRecipeClick = (recipe: Search) => {
+        setSelectedRecipe(recipe);
+        setRecipes([]);
+    };
 
     return (
-        <div className="flex items-center justify-center p-4">
-            <Box className="p-8 rounded-xl w-full">
+        <div className="flex items-center justify-center">
+            <Box className="mb-8 rounded-xl w-full max-w-4xl">
                 <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
                     Search Recipe
                 </h2>
@@ -63,36 +69,40 @@ const MealPlannerSearch: React.FC = () => {
                         size="lg"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full border-gray-300 rounded-lg focus:border-[#16B97A] focus:ring-[#16B97A]"
+                        className="w-full border-gray-300 rounded-lg focus:border-[#16B97A] focus:ring-[#16B97A] px-4 py-2"
                     />
-
                 </div>
 
-                {loading && <p>Loading...</p>}
-                {error && <p className="text-red-600">{error}</p>}
+                {loading && <p className="text-center text-gray-600 mt-4">Loading...</p>}
+                {error && <p className="text-center text-red-600 mt-4">{error}</p>}
 
-
-                <div className='w-full '>
-                    {recipes.length > 0 && (
-                        <div className="mt-4">
-                            {recipes.map((recipe) => (
-
-                                <div key={recipe.id} className="text-gray-800">
-                                    <Link href={`recipe/${recipe.id}`}>
-                                        <h1 className='p-2 border mt-4'>{recipe.title}</h1>
-                                    </Link>
+                {recipes.length > 0 ? (
+                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {recipes.map((recipe) => (
+                            <div
+                                key={recipe.id}
+                                onClick={() => handleRecipeClick(recipe)}
+                                className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+                            >
+                                <div className="flex flex-col sm:flex-row items-center gap-4">
+                                    <img
+                                        src={recipe.image}
+                                        alt={recipe.title}
+                                        className="w-full sm:w-32 h-32 object-cover rounded-lg mb-4 sm:mb-0"
+                                    />
+                                    <h3 className="text-lg font-semibold text-gray-800 hover:text-[#16B97A] truncate">
+                                        {recipe.title}
+                                    </h3>
                                 </div>
-
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    !loading && !error && <p>No Recipe Found</p>
+                )}
             </Box>
         </div>
     );
 };
 
 export default MealPlannerSearch;
-

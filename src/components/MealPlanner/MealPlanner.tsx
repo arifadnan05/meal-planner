@@ -1,54 +1,85 @@
 "use client"
-import React, { useState } from 'react';
-import { format, addDays } from 'date-fns';
+import React, { useEffect, useState } from 'react';
 import MealPlannerModal from './MealPlannerModal/MealPlannerModal';
+import moment from 'moment';
+
 
 const MealPlannerCalendar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const today = new Date();
-  const daysOfWeek = Array.from({ length: 7 }, (_, i) => addDays(today, i));
+  const [selectedDate, setSelectedDate] = useState<string>(''); // To track the selected date for the modal
+  const mealPlans = JSON.parse(localStorage.getItem('mealPlans') || '[]');
+  const [currentDate, setCurrentDate] = useState(moment()); // Current date
+  const [weekDates, setWeekDates] = useState<string[]>([]);
+  console.log(mealPlans)
+  // Generate an array of the current week (7 days)
+  useEffect(() => {
+    const week = [];
+    for (let i = 0; i < 7; i++) {
+      week.push(currentDate.clone().add(i, 'days').format('YYYY-MM-DD'));
+    }
+    setWeekDates(week);
+  }, [currentDate]);
 
-  
+  // Function to filter meals by date
+  const getMealsForDate = (date: string) => {
+    return mealPlans.filter(meal => meal.date === date);
+  };
+
+  // Function to open the modal and set the selected date
+  const openModal = (date: string) => {
+    setSelectedDate(date);
+    setIsOpen(true);
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
-        Weekly Meal Planner Calendar
-      </h2>
-      <p className="text-center text-lg mb-6 text-gray-600">
-        {format(today, 'MMMM dd')} - {format(addDays(today, 6), 'MMMM dd, yyyy')}
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {daysOfWeek.map((date, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow border border-gray-200"
-          >
-            <h3 className="text-lg font-semibold mb-4 text-gray-700 text-center">
-              {format(date, 'EEEE, MMM dd')}
-            </h3>
-            <div className="space-y-4">
-              {['Breakfast', 'Lunch', 'Dinner'].map((meal, idx) => (
-                <div key={idx} className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-gray-200 rounded-lg"></div>
-                  <div className="flex-1">
-                    <h4 className="text-md font-bold text-gray-800">{meal} Title</h4>
-                    <p className="text-sm text-gray-600">Calories: -</p>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            <button
-              onClick={() => setIsOpen(true)}
-              className="mt-4 w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors"
-            >
-              Open Modal
-            </button>
-          </div>
-        ))}
+      <div className="meal-planner">
+        <div className="week-header text-center py-4">
+          <h2 className="text-xl font-bold">Meal Planner</h2>
+          <p>{currentDate.format('MMMM YYYY')}</p>
+        </div>
+        <div className="calendar grid grid-cols-7 gap-4">
+          {weekDates.map((date, index) => {
+            const mealsForDay = getMealsForDate(date);
+
+            return (
+              <div key={index} className="day p-2 border rounded-lg">
+                <div className="date text-center font-semibold mb-2">
+                  {moment(date).format('dddd, MMM D')}
+                </div>
+                {mealsForDay.length > 0 ? (
+                  mealsForDay.map((meal: string, mealIndex: number) => (
+                    <div key={mealIndex} className="meal bg-gray-100 p-2 rounded-lg mb-2">
+                      <img src={meal.value.image} alt={meal.value.title} className="w-full h-32 object-cover rounded-lg mb-2" />
+                      <div className="meal-info text-center">
+                        <h4 className="font-semibold">{meal.value.title}</h4>
+                        <p>{meal.slot}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="no-meal text-center text-sm text-gray-500">No meal planned</div>
+                )}
+
+                {/* Add Meal Plan Button */}
+                <div className="text-center mt-2">
+                  <button
+                    onClick={() => openModal(date)}
+                    className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors"
+                  >
+                    Add Meal
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {isOpen && <MealPlannerModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}
+      {/* Meal Planner Modal */}
+      {isOpen && <MealPlannerModal isOpen={isOpen} onClose={() => setIsOpen(false)} selectedDate={selectedDate} />}
+
     </div>
   );
 };
