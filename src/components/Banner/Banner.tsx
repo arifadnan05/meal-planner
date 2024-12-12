@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Container, Overlay, Text, Title } from '@mantine/core';
+import { Container, Overlay, Text } from '@mantine/core';
 import classes from './HeroContentLeft.module.css';
 import { EB_Garamond } from 'next/font/google';
 
@@ -19,7 +19,7 @@ const Banner = () => {
             <div className='text-white'>
                 <Container className={classes.container} size="md">
                     <div className='mt-32'>
-                        <Title className={`${classes.title} ${ebGaramond.className} text-[40px] md:text-[60px] lg:text-[80px]`}>Plan Your Next Meal Event With Us</Title>
+                        <h1 className={`${classes.title} ${ebGaramond.className} font-semibold text-[40px] md:text-[60px] lg:text-[80px]`}>Plan Your Next Meal Event With Us</h1>
                         <Text className={`${classes.description}`} size="xl" mt="xl">
                             The simplicity of homemade goodness with our Tiffin deliveries, where every meal is prepared with care & authenticity
                         </Text>

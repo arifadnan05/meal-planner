@@ -48,7 +48,7 @@ export default function HeaderMegaMenu() {
                                 </HoverCard.Target>
                             </HoverCard>
 
-                            <Link href="#" className={classes.link}>
+                            <Link href="/meal-planner" className={classes.link}>
                                 Meal Planner
                             </Link>
                             <Link href="#" className={classes.link}>

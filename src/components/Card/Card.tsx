@@ -14,7 +14,7 @@ const Card: React.FC = () => {
     const fetchRecipes = async () => {
       try {
         const data = await RecipesServices.getAllRecipes();
-        console.log('Fetched Data:', data.data.recipes);
+        // console.log('Fetched Data:', data.data.recipes);
         setRecipes(data.data.recipes);
       } catch (error) {
         setErrorMessage('Failed to fetch recipes.');
