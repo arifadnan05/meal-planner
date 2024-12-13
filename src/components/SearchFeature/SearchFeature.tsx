@@ -62,7 +62,6 @@ const SearchFeature: React.FC<SearchFeatureProps> = ({ closeSearch }) => {
             closeSearch();
         }
     };
-
     return (
         <div className="fixed inset-0 z-[1000] bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
             <Box className="bg-white p-8 rounded-xl w-full max-w-xl shadow-2xl relative">
@@ -89,7 +88,6 @@ const SearchFeature: React.FC<SearchFeatureProps> = ({ closeSearch }) => {
                 {loading && <p>Loading...</p>}
                 {error && <p className="text-red-600">{error}</p>}
 
-                {/* Show search results live */}
                 {recipes.length > 0 && (
                     <div className="mt-4 h-52 overflow-auto">
                         {recipes.map((recipe) => (

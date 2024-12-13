@@ -2,11 +2,6 @@
 import { Accordion, Container, Grid, Image, Title } from '@mantine/core';
 import classes from './FaqWithImage.module.css';
 
-
-
-const placeholder =
-    'It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.';
-
 export function Faq() {
     return (
         <div className={`${classes.wrapper} mt-16`}>
@@ -22,25 +17,25 @@ export function Faq() {
 
                         <Accordion chevronPosition="right" defaultValue="reset-password" variant="separated">
                             <Accordion.Item className={classes.item} value="reset-password">
-                                <Accordion.Control>How can I reset my password?</Accordion.Control>
-                                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                                <Accordion.Control>Can I customize my meal plans to fit dietary restrictions?</Accordion.Control>
+                                <Accordion.Panel>Yes, you can easily customize meal plans to suit your dietary restrictions. Whether you&apos;re vegan, vegetarian, gluten-free, or have other specific needs, our platform allows you to filter recipes and create meal plans that align with your preferences. You can also exclude certain ingredients and sort recipes by dietary type for a tailored experience.</Accordion.Panel>
                             </Accordion.Item>
 
                             <Accordion.Item className={classes.item} value="another-account">
-                                <Accordion.Control>Can I create more than one account?</Accordion.Control>
-                                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                                <Accordion.Control>Does the meal planner provide nutritional information?</Accordion.Control>
+                                <Accordion.Panel>Yes, each recipe includes detailed nutritional information such as calories, macronutrients, and vitamins. This helps you track your dietary intake and meet your health goals.</Accordion.Panel>
                             </Accordion.Item>
 
                             <Accordion.Item className={classes.item} value="newsletter">
-                                <Accordion.Control>How can I subscribe to the monthly newsletter?</Accordion.Control>
-                                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                                <Accordion.Control>Can I share my meal plans with others?</Accordion.Control>
+                                <Accordion.Panel>Absolutely! You can share your meal plans with family or friends via email or by generating a unique shareable link directly from your account. It’s perfect for collaborative meal planning or gifting ideas to loved ones.</Accordion.Panel>
                             </Accordion.Item>
 
                             <Accordion.Item className={classes.item} value="credit-card">
                                 <Accordion.Control>
-                                    Do you store credit card information securely?
+                                    How do I save my favorite recipes for later?
                                 </Accordion.Control>
-                                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                                <Accordion.Panel>You can save your favorite recipes by clicking the &quot;Save&quot; or &quot;Favorite&quot; button on the recipe page. Saved recipes will appear in your personal collection, which you can access anytime from your dashboard.</Accordion.Panel>
                             </Accordion.Item>
                         </Accordion>
                     </Grid.Col>

@@ -3,12 +3,7 @@ import { RecipesServices } from '@/components/services/RecipesServices';
 import Image from 'next/image';
 import React from 'react';
 
-// Props type for the component
-// interface RecipeDetailsProps {
-//   params: Promise<{
-//     id: string;
-//   }>;
-// }
+
 interface RecipesDetails {
   id: string;
   title: string;
@@ -48,14 +43,11 @@ const RecipeDetails = async ({
 }: {
   params: Promise<{ id: string }>
 }) => {
-  // Resolve `params` from the Promise
 
   const id = (await params).id
-
   // Fetch recipe details
-  const { data }: { data: RecipesDetails} = await RecipesServices.getRecipesDetails({ id });
+  const { data }: { data: RecipesDetails } = await RecipesServices.getRecipesDetails({ id });
   console.log(RecipeDetails)
-  // Extract equipment from instructions
   const equipment: Equipment[] = [];
   if (data?.analyzedInstructions?.length > 0) {
     data.analyzedInstructions.forEach(instruction => {
@@ -103,12 +95,8 @@ const RecipeDetails = async ({
                 <p className='p-2 border rounded bg-green-100'><span className='font-semibold'>Ready In:</span> {Math.round(data.readyInMinutes)} Minutes</p>
                 <p className='p-2 border rounded bg-yellow-100'><span className='font-semibold'>Health Score:</span> {Math.round(data.healthScore)}%</p>
               </div>
-
-
-
             </div>
           </div>
-
         </div>
       </header>
       <hr />
@@ -161,7 +149,6 @@ const RecipeDetails = async ({
       <div>
         <h2 className='text-2xl font-semibold mt-8 mb-16'>Step-by-Step Instructions</h2>
       </div>
-
       <div>
         <div className="">
           {data?.analyzedInstructions.map((instruction, idx) => (
@@ -175,7 +162,6 @@ const RecipeDetails = async ({
                   </div>
                 ))}
               </div>
-
             </div>
           ))}
           <div className="text-center p-6 bg-green-100 border border-green-500 rounded-lg shadow-md">

@@ -12,10 +12,7 @@ const Footer = () => {
                     <div className="lg:flex">
                         <div className="w-full -mx-6 lg:w-2/5">
                             <div className="px-6">
-                                <a href="#">
-                                    <Link href={'/'}><Image src={logo} alt="Logo" width={100} height={50} /></Link>
-                                </a>
-
+                                <Link href={'/'}><Image src={logo} alt="Logo" width={100} height={50} /></Link>
                                 <p className="max-w-sm mt-2 text-gray-100 dark:text-gray-100">Join 31,000+ other and never miss out on new tips, tutorials, and more.</p>
 
                                 <div className="flex mt-6 -mx-2">
@@ -67,14 +64,6 @@ const Footer = () => {
                                     <a href="#" className="block mt-2 text-sm text-gray-100 dark:text-gray-100 hover:underline">Music</a>
                                     <a href="#" className="block mt-2 text-sm text-gray-100 dark:text-gray-100 hover:underline">Videos</a>
                                 </div>
-
-                                <div>
-                                    <h3 className="text-gray-100 uppercase dark:text-white">Products</h3>
-                                    <a href="#" className="block mt-2 text-sm text-gray-100 dark:text-gray-100 hover:underline">Mega cloud</a>
-                                    <a href="#" className="block mt-2 text-sm text-gray-100 dark:text-gray-100 hover:underline">Aperion UI</a>
-                                    <a href="#" className="block mt-2 text-sm text-gray-100 dark:text-gray-100 hover:underline">Meraki UI</a>
-                                </div>
-
                                 <div>
                                     <h3 className="text-gray-100 uppercase dark:text-white">Contact</h3>
                                     <span className="block mt-2 text-sm text-gray-100 dark:text-gray-100 hover:underline">+1 526 654 8965</span>

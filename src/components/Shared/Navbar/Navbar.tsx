@@ -4,8 +4,6 @@ import { IconZoom } from '@tabler/icons-react';
 import {
     Box,
     Burger,
-    Button,
-    Center,
     Divider,
     Drawer,
     Group,
@@ -29,7 +27,7 @@ export default function HeaderMegaMenu() {
         <Box>
             <header className={`${classes.header} bg-[#F9F2E6] py-8`}>
                 <Group className='container mx-auto px-4' position="apart" sx={{ height: '100%' }}>
-                    <Image src={logo} alt="Logo" width={100} height={50} />
+                    <Link href={'/'}><Image src={logo} alt="Logo" width={100} height={50} /></Link>
 
                     <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
                         <Group className='gap-5' sx={{ height: '100%' }} spacing={0}>
@@ -37,15 +35,6 @@ export default function HeaderMegaMenu() {
                                 Home
                             </Link>
                             <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
-                                <HoverCard.Target>
-                                    <Link href="#" className={classes.link}>
-                                        <Center inline>
-                                            <Box component="span" mr={5}>
-                                                Recipes
-                                            </Box>
-                                        </Center>
-                                    </Link>
-                                </HoverCard.Target>
                             </HoverCard>
 
                             <Link href="/meal-planner" className={classes.link}>
@@ -57,16 +46,9 @@ export default function HeaderMegaMenu() {
                         </Group>
                     </MediaQuery>
 
-                    <div className='ml-64 cursor-pointer' onClick={toggleSearch}>
+                    <div className='ml-52 cursor-pointer' onClick={toggleSearch}>
                         <IconZoom stroke={3} />
                     </div>
-
-                    <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-                        <Group>
-                            <Button variant="default">Log in</Button>
-                        </Group>
-                    </MediaQuery>
-
                     <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                         <Burger opened={drawerOpened} onClick={toggleDrawer} />
                     </MediaQuery>
@@ -99,14 +81,11 @@ export default function HeaderMegaMenu() {
 
                     <Divider my="sm" />
 
-                    <Group position="center" grow pb="xl" px="md">
-                        <Button variant="default">Log in</Button>
-                    </Group>
+
                 </ScrollArea>
             </Drawer>
 
             {searchOpened && (
-
                 <div className='h-[300px] overflow-auto'>
                     <SearchFeature closeSearch={closeSearch}></SearchFeature>
                 </div>

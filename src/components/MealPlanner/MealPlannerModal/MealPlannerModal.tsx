@@ -57,6 +57,7 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
             const mealPlans = JSON.parse(localStorage.getItem("mealPlans") || "[]");
             mealPlans.push(postMealPlan);
             localStorage.setItem("mealPlans", JSON.stringify(mealPlans));
+            window.location.reload();
         }
 
         onClose();
@@ -78,7 +79,6 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
                                 <IoSaveOutline />
                             </i>
                         </div>
-
                         <div className="my-4 text-center">
                             <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white" id="modal-title">Add Meal</h3>
                             <h3>{new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'short', day: 'numeric' }).format(new Date(selectedDate))}</h3>
