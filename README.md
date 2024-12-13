@@ -1,6 +1,6 @@
 # Meal Planner
 
-# Documentation
+## Documentation
 Meal Planner [Project Documentaton](https://docs.google.com/document/d/1vcI-r5rpzzkonQHdDarYORw-YKICyLVownSMu7mYbmo/edit?usp=sharing).
 
 
