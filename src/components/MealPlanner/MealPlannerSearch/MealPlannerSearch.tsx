@@ -5,6 +5,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Search } from "@/components/models/SearchResult";
 
+type Error = {
+    message: string;
+
+}
 interface MealPlannerSearchProps {
     sendDataToParent: (recipe: Search | null) => void;
 }
@@ -16,6 +20,8 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
     const [selectedRecipe, setSelectedRecipe] = useState<Search | null>(null);
     const [error, setError] = useState("");
 
+
+
     const API_KEY = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
 
     useEffect(() => {
@@ -23,6 +29,7 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
             console.error("Spoonacular API key is missing!");
         }
     }, [API_KEY]);
+
 
     // Memoize sendDataToParent to avoid unnecessary re-renders
     const memoizedSendData = useCallback(() => {
@@ -54,9 +61,9 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
                     },
                 });
                 setRecipes(response.data.results || []);
-            } catch (err) {
+            } catch (err: unknown) {
                 const errorMessage =
-                    err.response?.data?.message || "An unexpected error occurred while fetching recipes.";
+                    (err as Error).message || "An unexpected error occurred while fetching recipes.";
                 setError(errorMessage);
                 console.error("Error fetching recipes:", err);
             } finally {

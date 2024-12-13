@@ -4,6 +4,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { useForm, SubmitHandler } from "react-hook-form";
 import MealPlannerSearch from "../MealPlannerSearch/MealPlannerSearch";
 import Image from "next/image";
+import { Search } from "@/components/models/SearchResult";
 
 type Toggle = {
     isOpen: boolean;
@@ -11,12 +12,12 @@ type Toggle = {
     selectedDate: string;
 };
 
-type RecipeInfo = {
-    title: string | null;
-    image: string | null;
-    servings: string | null;
-    id: number | null;
-};
+// type RecipeInfo = {
+//     title: string | null;
+//     image: string | null;
+//     servings: string | null;
+//     id: number | null;
+// };
 
 type FormData = {
     userName: string;
@@ -25,11 +26,12 @@ type FormData = {
 
 const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-    const [message, setMessage] = useState<RecipeInfo | null>(null);
+    const [message, setMessage] = useState<Search | null>(null);
 
-    const handleDataFromChild = (data: RecipeInfo) => {
+    const handleDataFromChild = (data: Search | null) => {
         setMessage(data);
     };
+    console.log(handleDataFromChild)
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         if (!message) {
