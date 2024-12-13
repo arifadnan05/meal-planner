@@ -4,15 +4,20 @@ import Image from 'next/image';
 import React from 'react';
 
 // Props type for the component
-interface RecipeDetailsProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+// interface RecipeDetailsProps {
+//   params: Promise<{
+//     id: string;
+//   }>;
+// }
 
-const RecipeDetails = async ({ params }: RecipeDetailsProps) => {
+const RecipeDetails = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) => {
   // Resolve `params` from the Promise
-  const { id } = await params;
+
+  const id = (await params).id
 
   // Fetch recipe details
   const { data }: { data: RecipesDetails } = await RecipesServices.getRecipesDetails({ id });
