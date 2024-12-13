@@ -1,5 +1,9 @@
 # Meal Planner
 
+# Documentation
+Meal Planner [Project Documentaton](https://docs.google.com/document/d/1vcI-r5rpzzkonQHdDarYORw-YKICyLVownSMu7mYbmo/edit?usp=sharing).
+
+
 ## Overview
 Meal Planner is a web application designed to simplify meal planning for everyday life. With its user-friendly interface and powerful features, Meal Planner allows users to search for recipes, organize their meals into specific time slots, and share their meal plans effortlessly. All data is securely stored in local storage, ensuring a seamless user experience.
 
@@ -78,8 +82,6 @@ Follow these steps to run the Meal Planner project locally:
   - `72aedcfe879440a39fcecb96af850443`
   - `037f6d097fd14144a702121fc5d8a85b`
 
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 ## Conclusion
 Thank you for exploring Meal Planner! This project is designed to make meal planning an enjoyable and hassle-free experience. Feel free to provide feedback or suggestions to help us improve. 🎉 Happy meal planning!
