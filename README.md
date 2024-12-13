@@ -55,7 +55,7 @@ Follow these steps to run the Meal Planner project locally:
      _(Click to copy)_
    - Add the following content to `.env.local`:
      ```env
-     NEXT_PUBLIC_SPOONACULAR_API_KEY=128d22c5e8324ff9b3f348d814dc1130
+     NEXT_PUBLIC_SPOONACULAR_API_KEY='128d22c5e8324ff9b3f348d814dc1130'
      ```
      _(Click to copy)_
 
