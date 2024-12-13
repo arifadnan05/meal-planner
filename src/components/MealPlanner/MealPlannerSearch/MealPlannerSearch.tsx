@@ -1,32 +1,37 @@
 "use client";
-import { Box, TextInput } from '@mantine/core';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { Search } from '@/components/models/SearchResult';
-import Image from 'next/image';
+import { Box, TextInput } from "@mantine/core";
+import axios from "axios";
+import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import { Search } from "@/components/models/SearchResult";
 
 interface MealPlannerSearchProps {
     sendDataToParent: (recipe: Search | null) => void;
 }
 
 const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent }) => {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
     const [recipes, setRecipes] = useState<Search[]>([]);
     const [loading, setLoading] = useState(false);
     const [selectedRecipe, setSelectedRecipe] = useState<Search | null>(null);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
-    const API_KEY: string = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY || "default-api-key";
+    const API_KEY = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
 
     useEffect(() => {
-        if (!API_KEY || API_KEY === 'default-api-key') {
-            console.error('Missing or invalid Spoonacular API key!');
+        if (!API_KEY) {
+            console.error("Spoonacular API key is missing!");
         }
     }, [API_KEY]);
 
-    useEffect(() => {
+    // Memoize sendDataToParent to avoid unnecessary re-renders
+    const memoizedSendData = useCallback(() => {
         sendDataToParent(selectedRecipe);
     }, [selectedRecipe, sendDataToParent]);
+
+    useEffect(() => {
+        memoizedSendData();
+    }, [selectedRecipe, memoizedSendData]);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -36,25 +41,24 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
             }
 
             setLoading(true);
-            setError('');
+            setError("");
+
             try {
-                const response = await axios.get(
-                    'https://api.spoonacular.com/recipes/complexSearch',
-                    {
-                        params: {
-                            apiKey: API_KEY,
-                            query: searchQuery,
-                            number: 50,
-                            diet: 'vegan',
-                            addRecipeInformation: true,
-                        },
-                    }
-                );
-                setRecipes(response.data.results);
+                const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
+                    params: {
+                        apiKey: API_KEY,
+                        query: searchQuery,
+                        number: 50,
+                        diet: "vegan",
+                        addRecipeInformation: true,
+                    },
+                });
+                setRecipes(response.data.results || []);
             } catch (err) {
-                const errorMessage = err.response?.data?.message || 'Error fetching recipes!';
+                const errorMessage =
+                    err.response?.data?.message || "An unexpected error occurred while fetching recipes.";
                 setError(errorMessage);
-                console.error('Fetch error:', err);
+                console.error("Error fetching recipes:", err);
             } finally {
                 setLoading(false);
             }
@@ -62,23 +66,19 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
 
         const delayDebounceFn = setTimeout(() => {
             fetchRecipes();
-        }, 300); // Debounce API calls
+        }, 300);
 
         return () => clearTimeout(delayDebounceFn);
     }, [searchQuery, API_KEY]);
 
     const handleRecipeClick = (recipe: Search) => {
         setSelectedRecipe(recipe);
-        setRecipes([]);
     };
 
     return (
         <div className="flex items-center justify-center">
             <Box className="mb-8 rounded-xl w-full max-w-4xl">
-                <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
-                    Search Recipe
-                </h2>
-
+                <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">Search Recipe</h2>
                 <div className="flex flex-col md:flex-row gap-4">
                     <TextInput
                         placeholder="Type to search..."
@@ -116,7 +116,9 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
                         ))}
                     </div>
                 ) : (
-                    !loading && !error && searchQuery && (
+                    !loading &&
+                    !error &&
+                    searchQuery && (
                         <p className="text-center text-gray-600 mt-4">
                             No recipes found for {searchQuery}
                         </p>

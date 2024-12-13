@@ -8,9 +8,6 @@ import Image from "next/image";
 type Toggle = {
     isOpen: boolean;
     onClose: () => void;
-    date?: string;
-    userName?: string;
-    meal?: string;
     selectedDate: string;
 };
 
@@ -21,25 +18,28 @@ type RecipeInfo = {
     id: number | null;
 };
 
+type FormData = {
+    userName: string;
+    meal: string;
+};
+
 const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<Toggle>();
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [message, setMessage] = useState<RecipeInfo | null>(null);
 
     const handleDataFromChild = (data: RecipeInfo) => {
         setMessage(data);
     };
 
-    const onSubmit: SubmitHandler<Toggle> = async (data) => {
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
         if (!message) {
             alert("Please select a recipe before submitting.");
             return;
         }
 
-        const { userName, meal } = data;
-
         const postMealPlan = {
-            username: userName,
-            slot: meal,
+            username: data.userName,
+            slot: data.meal,
             position: 0,
             type: "RECIPE",
             value: {
@@ -51,10 +51,11 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
             date: selectedDate,
         };
 
-        const mealPlans = JSON.parse(localStorage.getItem("mealPlans") || "[]");
-
-        mealPlans.push(postMealPlan);
-        localStorage.setItem("mealPlans", JSON.stringify(mealPlans));
+        if (typeof window !== "undefined") {
+            const mealPlans = JSON.parse(localStorage.getItem("mealPlans") || "[]");
+            mealPlans.push(postMealPlan);
+            localStorage.setItem("mealPlans", JSON.stringify(mealPlans));
+        }
 
         onClose();
     };
@@ -92,7 +93,7 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
                                         width={1000}
                                         height={500}
                                         className="w-full object-cover"
-                                        src={message.image}
+                                        src={message.image || ""}
                                         alt={message.title || "Meal image"}
                                     />
                                     <div className="px-6 py-4">
@@ -107,7 +108,7 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
                                 <div className="w-1/2">
                                     <label className="block text-gray-700 dark:text-gray-200">Username</label>
                                     <input
-                                        placeholder="Enter your name hare..."
+                                        placeholder="Enter your name here..."
                                         {...register("userName", {
                                             required: "Name is required",
                                         })}
@@ -140,6 +141,7 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
                             <button
                                 type="button"
                                 onClick={onClose}
+                                aria-label="Close Modal"
                                 className="w-full bg-slate-500 px-4 py-2 mt-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:mt-0 sm:w-auto sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
                             >
                                 Close
