@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Meal Planner
 
 ## Overview
@@ -84,3 +85,6 @@ This project is licensed under the [MIT License](LICENSE).
 ## Conclusion
 Thank you for exploring Meal Planner! This project is designed to make meal planning an enjoyable and hassle-free experience. Feel free to provide feedback or suggestions to help us improve. 🎉 Happy meal planning!
 
+=======
+
+>>>>>>> 87bcb2838a9fafdb19d23b7ed04255f38264f23d
