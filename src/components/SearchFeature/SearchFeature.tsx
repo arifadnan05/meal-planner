@@ -18,7 +18,7 @@ const SearchFeature: React.FC<SearchFeatureProps> = ({ closeSearch }) => {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    const API_KEY = '037f6d097fd14144a702121fc5d8a85b';
+    const API_KEY = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY || "default-api-key";
 
     // Fetch recipes when searchQuery changes
     useEffect(() => {

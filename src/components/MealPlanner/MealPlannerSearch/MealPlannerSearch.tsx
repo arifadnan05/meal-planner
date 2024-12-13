@@ -12,7 +12,8 @@ const MealPlannerSearch: React.FC = ({ sendDataToParent }) => {
     const [selectedRecipe, setSelectedRecipe] = useState<Search | null>(null);
     const [error, setError] = useState('');
 
-    const API_KEY = 'aedde2b446084d9c912dc2e1216bf46e';
+    const API_KEY: string = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY || "default-api-key";
+
 
     useEffect(() => {
         sendDataToParent(selectedRecipe);

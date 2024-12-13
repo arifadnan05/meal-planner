@@ -23,12 +23,13 @@ type RecipeInfo = {
 const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm<Toggle>();
     const [message, setMessage] = useState<RecipeInfo | null>(null);
-
     const handleDataFromChild = (data: RecipeInfo) => {
         setMessage(data);
     };
+    
     // console.log(message)
     const onSubmit: SubmitHandler<Toggle> = async (data) => {
+        
         const { userName, meal } = data;
 
         const postMealPlan = {
@@ -52,6 +53,8 @@ const MealPlannerModal: React.FC<Toggle> = ({ isOpen, onClose, selectedDate }) =
         localStorage.setItem('mealPlans', JSON.stringify(mealPlans));
 
         onClose();
+
+
     };
 
 
