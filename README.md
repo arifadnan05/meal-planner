@@ -81,6 +81,8 @@ Follow these steps to run the Meal Planner project locally:
   - `72aedcfe879440a39fcecb96af850443`
   - `037f6d097fd14144a702121fc5d8a85b`
 
+## License
+This project is licensed under the [MIT License](LICENSE).
 
 ## Conclusion
 Thank you for exploring Meal Planner! This project is designed to make meal planning an enjoyable and hassle-free experience. Feel free to provide feedback or suggestions to help us improve. 🎉 Happy meal planning!
