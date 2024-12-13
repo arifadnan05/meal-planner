@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Meal Planner
 
 ## Overview
@@ -55,7 +54,7 @@ Follow these steps to run the Meal Planner project locally:
      _(Click to copy)_
    - Add the following content to `.env.local`:
      ```env
-     NEXT_PUBLIC_SPOONACULAR_API_KEY='128d22c5e8324ff9b3f348d814dc1130'
+     NEXT_PUBLIC_SPOONACULAR_API_KEY=128d22c5e8324ff9b3f348d814dc1130
      ```
      _(Click to copy)_
 
@@ -85,6 +84,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## Conclusion
 Thank you for exploring Meal Planner! This project is designed to make meal planning an enjoyable and hassle-free experience. Feel free to provide feedback or suggestions to help us improve. 🎉 Happy meal planning!
 
-=======
-
->>>>>>> 87bcb2838a9fafdb19d23b7ed04255f38264f23d

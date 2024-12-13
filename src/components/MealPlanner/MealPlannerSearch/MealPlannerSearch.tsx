@@ -80,6 +80,7 @@ const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent 
 
     const handleRecipeClick = (recipe: Search) => {
         setSelectedRecipe(recipe);
+        setRecipes([])
     };
 
     return (
