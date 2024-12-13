@@ -29,7 +29,7 @@ Follow these steps to run the Meal Planner project locally:
 ### Installation
 1. **📂 Clone the Repository:**
    ```bash
-   git clone <repo-link>
+   git clone https://github.com/arifadnan05/meal-planner.git
    ```
    _(Click to copy)_
 
