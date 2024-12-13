@@ -1,17 +1,24 @@
-
-import { Equipment, RecipesDetails } from '@/components/models/RecipeDetails'
+import { Equipment, RecipesDetails } from '@/components/models/RecipeDetails';
 import { RecipesServices } from '@/components/services/RecipesServices';
 import Image from 'next/image';
-import React from 'react'
+import React from 'react';
 
-const RecipeDetails: React.FC<RecipesDetails> = async ({ params }) => {
+// Props type for the component
+interface RecipeDetailsProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+const RecipeDetails = async ({ params }: RecipeDetailsProps) => {
+  // Resolve `params` from the Promise
   const { id } = await params;
 
+  // Fetch recipe details
   const { data }: { data: RecipesDetails } = await RecipesServices.getRecipesDetails({ id });
 
-
+  // Extract equipment from instructions
   const equipment: Equipment[] = [];
-
   if (data?.analyzedInstructions?.length > 0) {
     data.analyzedInstructions.forEach(instruction => {
       instruction?.steps?.forEach(step => {
@@ -20,20 +27,12 @@ const RecipeDetails: React.FC<RecipesDetails> = async ({ params }) => {
             id: equip.id,
             name: equip.name,
             image: equip.image,
-            localizedName: equip.localizedName
+            localizedName: equip.localizedName,
           });
         });
       });
     });
   }
-
-
-  // console.log(equipment);
-
-  // const result = data.analyzedInstructions;
-  // console.log(result)
-
-
   return (
     <div className='container mx-auto px-4 '>
 
@@ -98,7 +97,7 @@ const RecipeDetails: React.FC<RecipesDetails> = async ({ params }) => {
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {equipment.slice(0, 12).map((item) => (
                 <div className="border p-2 text-center" key={item.id}>
-                  <Image 
+                  <Image
                     width={1000}
                     height={500}
                     src={item.image}
