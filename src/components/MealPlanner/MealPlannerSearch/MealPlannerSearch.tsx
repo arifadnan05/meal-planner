@@ -1,11 +1,15 @@
-
 "use client";
 import { Box, TextInput } from '@mantine/core';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Search } from '@/components/models/SearchResult';
+import Image from 'next/image';
 
-const MealPlannerSearch: React.FC = ({ sendDataToParent }) => {
+interface MealPlannerSearchProps {
+    sendDataToParent: (recipe: Search | null) => void;
+}
+
+const MealPlannerSearch: React.FC<MealPlannerSearchProps> = ({ sendDataToParent }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [recipes, setRecipes] = useState<Search[]>([]);
     const [loading, setLoading] = useState(false);
@@ -14,43 +18,54 @@ const MealPlannerSearch: React.FC = ({ sendDataToParent }) => {
 
     const API_KEY: string = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY || "default-api-key";
 
+    useEffect(() => {
+        if (!API_KEY || API_KEY === 'default-api-key') {
+            console.error('Missing or invalid Spoonacular API key!');
+        }
+    }, [API_KEY]);
 
     useEffect(() => {
         sendDataToParent(selectedRecipe);
-    }, [selectedRecipe]);
+    }, [selectedRecipe, sendDataToParent]);
 
     useEffect(() => {
-        if (searchQuery) {
-            const fetchRecipes = async () => {
-                setLoading(true);
-                setError('');
+        const fetchRecipes = async () => {
+            if (!searchQuery) {
+                setRecipes([]);
+                return;
+            }
 
-                try {
-                    const response = await axios.get(
-                        'https://api.spoonacular.com/recipes/complexSearch',
-                        {
-                            params: {
-                                apiKey: API_KEY,
-                                query: searchQuery,
-                                number: 50,
-                                diet: 'vegan',
-                                addRecipeInformation: true,
-                            },
-                        }
-                    );
-                    setRecipes(response.data.results);
-                } catch (err) {
-                    setError('Error fetching recipes!');
-                    console.error(err);
-                } finally {
-                    setLoading(false);
-                }
-            };
+            setLoading(true);
+            setError('');
+            try {
+                const response = await axios.get(
+                    'https://api.spoonacular.com/recipes/complexSearch',
+                    {
+                        params: {
+                            apiKey: API_KEY,
+                            query: searchQuery,
+                            number: 50,
+                            diet: 'vegan',
+                            addRecipeInformation: true,
+                        },
+                    }
+                );
+                setRecipes(response.data.results);
+            } catch (err) {
+                const errorMessage = err.response?.data?.message || 'Error fetching recipes!';
+                setError(errorMessage);
+                console.error('Fetch error:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const delayDebounceFn = setTimeout(() => {
             fetchRecipes();
-        } else {
-            setRecipes([]);
-        }
-    }, [searchQuery]);
+        }, 300); // Debounce API calls
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [searchQuery, API_KEY]);
 
     const handleRecipeClick = (recipe: Search) => {
         setSelectedRecipe(recipe);
@@ -83,10 +98,12 @@ const MealPlannerSearch: React.FC = ({ sendDataToParent }) => {
                             <div
                                 key={recipe.id}
                                 onClick={() => handleRecipeClick(recipe)}
-                                className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+                                className="bg-white p-4 cursor-pointer rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
                             >
                                 <div className="flex flex-col sm:flex-row items-center gap-4">
-                                    <img
+                                    <Image
+                                        width={150}
+                                        height={150}
                                         src={recipe.image}
                                         alt={recipe.title}
                                         className="w-full sm:w-32 h-32 object-cover rounded-lg mb-4 sm:mb-0"
@@ -99,7 +116,11 @@ const MealPlannerSearch: React.FC = ({ sendDataToParent }) => {
                         ))}
                     </div>
                 ) : (
-                    !loading && !error && <p>No Recipe Found</p>
+                    !loading && !error && searchQuery && (
+                        <p className="text-center text-gray-600 mt-4">
+                            No recipes found for {searchQuery}
+                        </p>
+                    )
                 )}
             </Box>
         </div>

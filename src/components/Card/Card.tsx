@@ -4,6 +4,7 @@ import { Recipes } from '../models/Recipes';
 import { RecipesServices } from '../services/RecipesServices';
 import { Button } from '@mantine/core';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Card: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipes[]>([]);
@@ -39,9 +40,11 @@ const Card: React.FC = () => {
           {/* Recipe Card */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             {/* Recipe Image */}
-            <img
+            <Image
               src={recipe.image}
               alt={recipe.image}
+              width={1000}
+              height={500}
               className="w-full h-56 object-cover group-hover:opacity-80 transform transition-all duration-300 hover:scale-105 hover:rotate-2"
             />
 

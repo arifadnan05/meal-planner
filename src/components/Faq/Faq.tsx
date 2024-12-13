@@ -13,7 +13,7 @@ export function Faq() {
             <Container size="lg">
                 <Grid id="faq-grid" gutter={50}>
                     <Grid.Col span={12} md={6}>
-                        <Image src='https://ui.mantine.dev/_next/static/media/image.b0c2306b.svg' alt="Frequently Asked Questions" />
+                        <Image width={''} height={''} src='https://ui.mantine.dev/_next/static/media/image.b0c2306b.svg' alt="Frequently Asked Questions" />
                     </Grid.Col>
                     <Grid.Col span={12} md={6}>
                         <Title order={2} ta="left" className={classes.title}>

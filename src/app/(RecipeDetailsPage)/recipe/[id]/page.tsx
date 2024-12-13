@@ -1,6 +1,7 @@
 
 import { Equipment, RecipesDetails } from '@/components/models/RecipeDetails'
 import { RecipesServices } from '@/components/services/RecipesServices';
+import Image from 'next/image';
 import React from 'react'
 
 const RecipeDetails: React.FC<RecipesDetails> = async ({ params }) => {
@@ -29,8 +30,8 @@ const RecipeDetails: React.FC<RecipesDetails> = async ({ params }) => {
 
   // console.log(equipment);
 
-  const result = data.analyzedInstructions;
-  console.log(result)
+  // const result = data.analyzedInstructions;
+  // console.log(result)
 
 
   return (
@@ -97,7 +98,9 @@ const RecipeDetails: React.FC<RecipesDetails> = async ({ params }) => {
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {equipment.slice(0, 12).map((item) => (
                 <div className="border p-2 text-center" key={item.id}>
-                  <img
+                  <Image 
+                    width={1000}
+                    height={500}
                     src={item.image}
                     alt={item.name}
                     className="w-full rounded-md mb-1"

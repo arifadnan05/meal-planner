@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search } from '../models/SearchResult';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Define props type
 interface SearchFeatureProps {
@@ -52,7 +53,7 @@ const SearchFeature: React.FC<SearchFeatureProps> = ({ closeSearch }) => {
         } else {
             setRecipes([]);
         }
-    }, [searchQuery]);
+    }, [searchQuery, API_KEY]);
 
     // Handle button click to navigate
     const handleSearch = () => {
@@ -90,12 +91,23 @@ const SearchFeature: React.FC<SearchFeatureProps> = ({ closeSearch }) => {
 
                 {/* Show search results live */}
                 {recipes.length > 0 && (
-                    <div className="mt-4">
+                    <div className="mt-4 h-52 overflow-auto">
                         {recipes.map((recipe) => (
 
-                            <div key={recipe.id} className="text-gray-800">
+                            <div key={recipe.id} className="text-gray-800 my-3">
                                 <Link href={`recipe/${recipe.id}`}>
-                                    <h1 className='p-2 border mt-4'>{recipe.title}</h1>
+                                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                                        <Image
+                                            width={1000}
+                                            height={500}
+                                            src={recipe.image}
+                                            alt={recipe.title}
+                                            className="w-full sm:w-32 h-32 object-cover rounded-lg mb-4 sm:mb-0"
+                                        />
+                                        <h3 className="text-lg font-semibold text-gray-800 hover:text-[#16B97A] truncate">
+                                            {recipe.title}
+                                        </h3>
+                                    </div>
                                 </Link>
                             </div>
 

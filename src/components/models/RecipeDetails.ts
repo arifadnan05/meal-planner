@@ -28,7 +28,7 @@ export interface RecipesDetails {
                 image: string;
                 localizedName: string;
             }]
-            
+
         }]
     }]
 }

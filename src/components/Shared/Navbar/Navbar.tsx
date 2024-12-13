@@ -51,7 +51,7 @@ export default function HeaderMegaMenu() {
                             <Link href="/meal-planner" className={classes.link}>
                                 Meal Planner
                             </Link>
-                            <Link href="#" className={classes.link}>
+                            <Link href="/shopping-list" className={classes.link}>
                                 Shopping List
                             </Link>
                         </Group>
@@ -107,7 +107,9 @@ export default function HeaderMegaMenu() {
 
             {searchOpened && (
 
-                <SearchFeature closeSearch={closeSearch}></SearchFeature>
+                <div className='h-[300px] overflow-auto'>
+                    <SearchFeature closeSearch={closeSearch}></SearchFeature>
+                </div>
 
             )}
 

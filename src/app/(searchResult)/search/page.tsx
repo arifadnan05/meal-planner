@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Search } from '@/components/models/SearchResult';
 import Link from 'next/link';
 import { Button } from '@mantine/core';
+import Image from 'next/image';
 
 
 const SearchResultsPage = () => {
@@ -97,9 +98,11 @@ const SearchResultsPage = () => {
                             {/* Recipe Card */}
                             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                                 {/* Recipe Image */}
-                                <img
+                                <Image
+                                    width={1000}
+                                    height={500}
                                     src={recipe.image}
-                                    alt={recipe.image}
+                                    alt={recipe.title}
                                     className="w-full h-56 object-cover group-hover:opacity-80 transform transition-all duration-300 hover:scale-105 hover:rotate-2"
                                 />
 
