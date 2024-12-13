@@ -1,4 +1,4 @@
-import { Equipment, RecipesDetails } from '@/components/models/RecipeDetails';
+import { Equipment } from '@/components/models/RecipeDetails';
 import { RecipesServices } from '@/components/services/RecipesServices';
 import Image from 'next/image';
 import React from 'react';
@@ -9,7 +9,40 @@ import React from 'react';
 //     id: string;
 //   }>;
 // }
+interface RecipesDetails {
+  id: string;
+  title: string;
+  image: string;
+  summary: string;
+  readyInMinutes: number;
+  servings: number;
+  diets: string[];
+  params: {
+    id: string
+  };
+  instructions: string;
+  spoonacularScore: number;
+  healthScore: number;
+  extendedIngredients: [{
+    name: string;
+    id: number;
+    image: string;
+  }];
+  dishTypes: string[];
+  analyzedInstructions: [{
+    steps: [{
+      number: number;
+      step: string;
+      equipment: [{
+        id: string;
+        name: string;
+        image: string;
+        localizedName: string;
+      }]
 
+    }]
+  }]
+}
 const RecipeDetails = async ({
   params,
 }: {
@@ -20,8 +53,8 @@ const RecipeDetails = async ({
   const id = (await params).id
 
   // Fetch recipe details
-  const { data }: { data: RecipesDetails } = await RecipesServices.getRecipesDetails({ id });
-
+  const { data }: { data: RecipesDetails} = await RecipesServices.getRecipesDetails({ id });
+  console.log(RecipeDetails)
   // Extract equipment from instructions
   const equipment: Equipment[] = [];
   if (data?.analyzedInstructions?.length > 0) {
