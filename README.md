@@ -1,5 +1,8 @@
 # Meal Planner
 
+Meal Planner [Project Documentaton](https://docs.google.com/document/d/1vcI-r5rpzzkonQHdDarYORw-YKICyLVownSMu7mYbmo/edit?usp=sharing).
+
+
 ## Overview
 Meal Planner is a web application designed to simplify meal planning for everyday life. With its user-friendly interface and powerful features, Meal Planner allows users to search for recipes, organize their meals into specific time slots, and share their meal plans effortlessly. All data is securely stored in local storage, ensuring a seamless user experience.
 
